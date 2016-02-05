@@ -16,5 +16,5 @@ public abstract interface DeviceGroupService
   
   public abstract void removeDeviceGroup(int paramIntDeviceGroupId);
   
-  
+  public abstract DeviceGroup getDeviceGroupByGroupName(String paramStrGroupName);
 }

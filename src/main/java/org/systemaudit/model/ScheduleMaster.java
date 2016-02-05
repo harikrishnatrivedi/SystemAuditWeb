@@ -34,7 +34,7 @@ public class ScheduleMaster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SCH_ID", nullable = false)
-	private int schId;
+	private Integer schId;
 
 	@Column(name = "SCH_RUN_DATETIME", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -66,7 +66,7 @@ public class ScheduleMaster {
 	/**
 	 * @return the schId
 	 */
-	public int getSchId() {
+	public Integer getSchId() {
 		return schId;
 	}
 
@@ -74,7 +74,7 @@ public class ScheduleMaster {
 	 * @param schId
 	 *            the schId to set
 	 */
-	public void setSchId(int schId) {
+	public void setSchId(Integer schId) {
 		this.schId = schId;
 	}
 
@@ -185,7 +185,7 @@ public class ScheduleMaster {
 
 	@Override
 	public String toString() {
-		return "objDeviceInfo [schId=" + schId + ", schRunDateTime=" + schRunDateTime + ", schCreatedDate="
+		return "objScheduleMaster [schId=" + schId + ", schRunDateTime=" + schRunDateTime + ", schCreatedDate="
 				+ schCreatedDate + ", schCreatedBy=" + schCreatedBy + ", objDeviceInfo=" + objDeviceInfo
 				/*+ ", lstObjFileDetails=" + lstObjFileDetails*/ + ", objDeviceGroup=" + objDeviceGroup + "]";
 	}

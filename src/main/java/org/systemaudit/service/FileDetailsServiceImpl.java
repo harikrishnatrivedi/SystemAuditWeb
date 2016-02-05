@@ -31,6 +31,14 @@ public class FileDetailsServiceImpl implements FileDetailsService {
 		return this.fileDetailsDAO.listFileDetailsByDeviceInfoId(paramIntDeviceInfoId);
 	}
 	
+	public List<FileDetails> listFileDetailsByScheduleMasterId(int paramIntScheduleMasterId) {
+		return this.fileDetailsDAO.listFileDetailsByScheduleMasterId(paramIntScheduleMasterId);
+	}
+	
+	public List<FileDetails> listFileDetailsByFileFilter(FileDetails objFileDetails) {
+		return this.fileDetailsDAO.listFileDetailsByFileFilter(objFileDetails);
+	}
+	
 	public FileDetails getFileDetailsById(int paramIntFileDetailsId) {
 		return this.fileDetailsDAO.getFileDetailsById(paramIntFileDetailsId);
 	}

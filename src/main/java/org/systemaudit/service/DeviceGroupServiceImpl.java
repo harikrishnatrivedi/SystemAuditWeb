@@ -39,5 +39,9 @@ public class DeviceGroupServiceImpl implements DeviceGroupService {
 	public void removeDeviceGroup(int paramIntDeviceGroupId) {
 		this.objDeviceGroupDAO.removeDeviceGroup(paramIntDeviceGroupId);
 	}
+
+	public DeviceGroup getDeviceGroupByGroupName(String paramStrGroupName) {
+		return objDeviceGroupDAO.getDeviceGroupByGroupName(paramStrGroupName);
+	}
 	
 }

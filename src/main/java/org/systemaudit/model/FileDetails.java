@@ -3,6 +3,8 @@
  */
 package org.systemaudit.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -52,8 +55,8 @@ public class FileDetails {
 	private long fileSize;
 
 	@Size(max = 10)
-	@Column(name = "FILE_STATUS", nullable = false, columnDefinition="character varying(10) default 'GOOD'")
-	private String fileStatus="GOOD";
+	@Column(name = "FILE_STATUS", nullable = false, columnDefinition = "character varying(10) default 'GOOD'")
+	private String fileStatus = "GOOD";
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FILE_COMP_ID", referencedColumnName = "COMP_ID")
@@ -62,9 +65,13 @@ public class FileDetails {
 	@ManyToOne
 	@JoinColumn(name = "FILE_SCH_ID", referencedColumnName = "SCH_ID")
 	private ScheduleMaster objScheduleMaster;
-	
-	
-	
+
+	@Transient
+	private List<DeviceInfo> lstObjDeviceInfo;
+
+	@Transient
+	private List<ScheduleMaster> lstObjScheduleMaster;
+
 	/**
 	 * @return the objScheduleMaster
 	 */
@@ -73,7 +80,8 @@ public class FileDetails {
 	}
 
 	/**
-	 * @param objScheduleMaster the objScheduleMaster to set
+	 * @param objScheduleMaster
+	 *            the objScheduleMaster to set
 	 */
 	public void setObjScheduleMaster(ScheduleMaster objScheduleMaster) {
 		this.objScheduleMaster = objScheduleMaster;
@@ -87,7 +95,8 @@ public class FileDetails {
 	}
 
 	/**
-	 * @param fileStatus the fileStatus to set
+	 * @param fileStatus
+	 *            the fileStatus to set
 	 */
 	public void setFileStatus(String fileStatus) {
 		this.fileStatus = fileStatus;
@@ -198,10 +207,40 @@ public class FileDetails {
 		this.objDeviceInfo = objDeviceInfo;
 	}
 
+	/**
+	 * @return the lstObjDeviceInfo
+	 */
+	public List<DeviceInfo> getLstObjDeviceInfo() {
+		return lstObjDeviceInfo;
+	}
+
+	/**
+	 * @param lstObjDeviceInfo
+	 *            the lstObjDeviceInfo to set
+	 */
+	public void setLstObjDeviceInfo(List<DeviceInfo> lstObjDeviceInfo) {
+		this.lstObjDeviceInfo = lstObjDeviceInfo;
+	}
+
+	/**
+	 * @return the lstObjScheduleMaster
+	 */
+	public List<ScheduleMaster> getLstObjScheduleMaster() {
+		return lstObjScheduleMaster;
+	}
+
+	/**
+	 * @param lstObjScheduleMaster
+	 *            the lstObjScheduleMaster to set
+	 */
+	public void setLstObjScheduleMaster(List<ScheduleMaster> lstObjScheduleMaster) {
+		this.lstObjScheduleMaster = lstObjScheduleMaster;
+	}
+
 	@Override
 	public String toString() {
 		return "objFileDetails [fileId=" + fileId + ", fileFullPath=" + fileFullPath + ", fileName=" + fileName
 				+ ", fileSize=" + fileSize + ", fileExtension=" + fileExtension + ", fileDrive=" + fileDrive
-				+ ", objDeviceInfo=" + objDeviceInfo + "]";
+				+ ", objDeviceInfo=" + objDeviceInfo + ", objScheduleMaster="+objScheduleMaster+"]";
 	}
 }

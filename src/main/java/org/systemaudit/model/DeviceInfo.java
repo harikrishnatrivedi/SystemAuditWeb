@@ -31,7 +31,7 @@ public class DeviceInfo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "COMP_ID", nullable = false)
-	private int compId;
+	private Integer compId;
 
 	@Size(max = 30)
 	@Column(unique = true, name = "COMP_NAME", nullable = false)
@@ -82,7 +82,7 @@ public class DeviceInfo {
 	/**
 	 * @return the compId
 	 */
-	public int getCompId() {
+	public Integer getCompId() {
 		return compId;
 	}
 
@@ -90,7 +90,7 @@ public class DeviceInfo {
 	 * @param compId
 	 *            the compId to set
 	 */
-	public void setCompId(int compId) {
+	public void setCompId(Integer compId) {
 		this.compId = compId;
 	}
 

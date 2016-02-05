@@ -56,4 +56,24 @@
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 		<nature>org.hibernate.eclipse.console.hibernateNature</nature>
 	</natures>
+	<filteredResources>
+		<filter>
+			<id>1454472302552</id>
+			<name></name>
+			<type>6</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.class</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1454472302552</id>
+			<name></name>
+			<type>30</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-target</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

@@ -27,6 +27,10 @@ public class ScheduleMasterServiceImpl implements ScheduleMasterService {
 		return this.scheduleMasterDAO.listScheduleMaster();
 	}
 
+	public List<ScheduleMaster> listSuccessScheduleMasterByDeviceId(int paramIntComputerId) {
+		return this.scheduleMasterDAO.listSuccessScheduleMasterByDeviceId(paramIntComputerId);
+	}
+	
 	public ScheduleMaster getScheduleMasterByDeviceComputerId(int paramIntComputerid){
 		return this.scheduleMasterDAO.getScheduleMasterByDeviceComputerId(paramIntComputerid);
 	}

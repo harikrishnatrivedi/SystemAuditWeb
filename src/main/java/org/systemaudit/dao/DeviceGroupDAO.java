@@ -18,4 +18,5 @@ public abstract interface DeviceGroupDAO
 
   public abstract void removeDeviceGroup(int paramIntId);
   
+  public abstract DeviceGroup getDeviceGroupByGroupName(String paramStrGroupName);
 }

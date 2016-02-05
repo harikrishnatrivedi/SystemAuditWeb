@@ -14,6 +14,9 @@
 
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+	
+	
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<context:annotation-config />
 	
@@ -26,7 +29,18 @@
 	        <property name="prefix" value="/WEB-INF/view/"/>
 	        <property name="suffix" value=".jsp"/>
 	</bean>
-	
+	<bean id="tilesConfigurer"
+        class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/view/tiles.xml</value>
+                
+            </list>
+        </property>
+    </bean>
+    
+    
+    
     <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager" />
 	<!-- ================================================================================== -->
 	
@@ -40,18 +54,17 @@
 				<prop key="hibernate.show_sql">true</prop>
 		        <prop key="hibernate.format_sql">true</prop>
 		        <prop key="hbm2ddl.auto">update</prop>
+		        <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
 		        <!-- JTA  -->
 		        <prop key="hibernate.transaction.factory_class">org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory</prop>
                 <prop key="hibernate.flushMode">AUTO</prop>
                 <prop key="jta.UserTransaction">java:jboss/UserTransaction</prop>
                 <prop key="jta.TransactionManager">java:jboss/TransactionManager</prop>
-                <!-- <prop key="hibernate.transaction.jta.platform">org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform</prop> -->
                 <prop key="hibernate.current_session_context_class">org.hibernate.context.internal.JTASessionContext</prop>
  
-               	<!--Turned off caching to focus on JTA issues-->
                	<prop key="hibernate.cache.use_second_level_cache">false</prop>
                 <prop key="hibernate.cache.use_query_cache">false</prop>
-                <!--prop key="hibernate.cache.provider_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop-->
+                
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
  
                 <prop key="net.sf.ehcache.configurationResourceName">sample-ehcache.xml</prop>

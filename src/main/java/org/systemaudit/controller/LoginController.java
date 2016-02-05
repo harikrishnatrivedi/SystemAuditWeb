@@ -25,6 +25,7 @@ public class LoginController {
 		if(session.getAttribute("empDetails")!=null){
 			return "redirect:/home";
 		}
+		System.out.println("checkRequestLogin");
 		model.addAttribute("employeeDetails",new EmployeeDetails());
 		return "login";
 	}

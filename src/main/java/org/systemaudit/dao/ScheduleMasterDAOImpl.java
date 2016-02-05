@@ -23,6 +23,13 @@ public class ScheduleMasterDAOImpl extends GenericDAOImpl<ScheduleMaster, Intege
 		return getCurrentSession().createQuery("from ScheduleMaster").list();
 	}
 
+	public List<ScheduleMaster> listSuccessScheduleMasterByDeviceId(int paramIntComputerId){
+		Criteria criteria=getCurrentSession().createCriteria(ScheduleMaster.class).setFetchMode("objDeviceInfo", FetchMode.JOIN);
+		criteria.add(Restrictions.eq("objDeviceInfo.id", paramIntComputerId));
+		criteria.add(Restrictions.eq("schStatus", "S"));
+		return criteria.list();
+	}
+	
 	public ScheduleMaster getScheduleMasterByDeviceComputerId(int paramIntComputerId) {
 		
 		Criteria criteria=getCurrentSession().createCriteria(ScheduleMaster.class).setFetchMode("objDeviceInfo", FetchMode.JOIN);

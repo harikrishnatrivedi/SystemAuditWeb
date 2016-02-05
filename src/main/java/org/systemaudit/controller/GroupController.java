@@ -1,5 +1,7 @@
 package org.systemaudit.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,38 +17,62 @@ import org.systemaudit.service.DeviceGroupService;
 
 @Controller
 public class GroupController {
-	
+
 	@Autowired
 	private DeviceGroupService objDeviceGroupService;
 
 	@RequestMapping(value = { "/addGroup" }, method = RequestMethod.GET)
 	public String addGroupGet(DeviceGroup objDeviceGroup, BindingResult result, ModelMap model,
 			HttpServletRequest request, HttpSession session) {
-		if(session.getAttribute("empDetails")==null){
+		if (session.getAttribute("empDetails") == null) {
 			return "redirect:/login";
 		}
-		model.addAttribute("deviceGroup",new DeviceGroup());
-		return "addgroup";
+		model.addAttribute("deviceGroup", new DeviceGroup());
+		return "group/addgroup";
 	}
 
 	@RequestMapping(value = { "/addGroup" }, method = RequestMethod.POST)
-	public String addGroupPost(DeviceGroup deviceGroup, BindingResult result, ModelMap redirectedModel, HttpSession session) {
-		
-		if(deviceGroup.getGrpName()==null || deviceGroup.getGrpName().isEmpty()){
+	public String addGroupPost(DeviceGroup deviceGroup, BindingResult result, ModelMap redirectedModel,
+			HttpSession session) {
+		if (session.getAttribute("empDetails") == null) {
+			return "redirect:/login";
+		}
+		if (deviceGroup.getGrpName() == null || deviceGroup.getGrpName().isEmpty()) {
 			result.addError(new FieldError("grpName", "grpName", "Group name can not be blank."));
-			return "addgroup";
+			return "group/addgroup";
 		}
 		try {
-			System.out.println("deviceGroup : "+deviceGroup);
+			DeviceGroup objChkDeviceGroup = objDeviceGroupService.getDeviceGroupByGroupName(deviceGroup.getGrpName());
+			if (objChkDeviceGroup != null) {
+				result.addError(new FieldError("grpName", "grpName", "Group is already created."));
+				return "addgroup";
+			}
+			System.out.println("deviceGroup : " + deviceGroup);
 			objDeviceGroupService.addDeviceGroup(deviceGroup);
 			result.addError(new FieldError("grpName", "grpName", "Record saved successfully."));
 		} catch (Exception e) {
 			result.addError(new FieldError("grpName", "grpName", e.getMessage()));
 			e.printStackTrace();
 		}
-		
-		return "addgroup";
+
+		return "group/addgroup";
 	}
 
-	
+	@RequestMapping(value = { "/viewGroups" }, method = RequestMethod.GET)
+	public String viewGroupGet(DeviceGroup deviceGroup, BindingResult result, ModelMap modelMap, HttpSession session) {
+		if (session.getAttribute("empDetails") == null) {
+			return "redirect:/login";
+		}
+
+		try {
+			List<DeviceGroup> lstObjChkDeviceGroup = objDeviceGroupService.listDeviceGroup();
+			modelMap.addAttribute("lstObjChkDeviceGroup", lstObjChkDeviceGroup);
+		} catch (Exception e) {
+			result.addError(new FieldError("grpName", "grpName", e.getMessage()));
+			e.printStackTrace();
+		}
+
+		return "group/viewgroups";
+	}
+
 }

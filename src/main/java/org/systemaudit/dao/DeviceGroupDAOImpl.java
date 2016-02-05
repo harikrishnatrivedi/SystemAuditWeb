@@ -31,4 +31,9 @@ public class DeviceGroupDAOImpl extends GenericDAOImpl<DeviceGroup, Integer> imp
 			getCurrentSession().delete(ed);
 		}
 	}
+	
+	public DeviceGroup getDeviceGroupByGroupName(String paramStrGroupName) {
+		return (DeviceGroup)getCurrentSession().createQuery("from DeviceGroup where grpName= :grpName").setParameter("grpName", paramStrGroupName).uniqueResult();		
+	}
+	
 }
