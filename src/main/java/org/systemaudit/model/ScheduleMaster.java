@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.joda.time.DateTime;
@@ -62,7 +63,7 @@ public class ScheduleMaster {
 
 	@OneToMany(mappedBy = "objScheduleMaster")
 	private List<FileDetails> lstObjFileDetails;
-
+	
 	/**
 	 * @return the schId
 	 */

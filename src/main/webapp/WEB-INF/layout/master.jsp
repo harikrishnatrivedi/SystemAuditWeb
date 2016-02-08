@@ -3,7 +3,13 @@
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
+        	<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="./home">System Audit</a>
             </div>
             <!-- /.navbar-header -->
@@ -32,7 +38,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="./home"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-group fa-fw"></i> Groups Management<span class="fa arrow"></span></a>
@@ -55,6 +61,9 @@
                                 <li>
                                     <a href="./viewDevices">View Devices</a>
                                 </li>
+                                <li>
+                                    <a href="./viewSuspiciousSystems">View Suspicious Devices</a>
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -62,7 +71,16 @@
                             <a href="#"><i class="fa fa-clock-o fa-fw"></i>Schedule Management<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="./viewSchedules">View Schedules</a>
+                                    <a href="./viewSchedules">View All Schedules</a>
+                                </li>
+                                <li>
+                                    <a href="#">View Success Schedules</a>
+                                </li>
+                                <li>
+                                    <a href="./viewPendingSchedules">View Pending Schedules</a>
+                                </li>
+                                <li>
+                                    <a href="./viewFailedSchedules">View Failed Schedules</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

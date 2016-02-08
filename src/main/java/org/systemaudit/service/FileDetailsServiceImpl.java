@@ -39,6 +39,10 @@ public class FileDetailsServiceImpl implements FileDetailsService {
 		return this.fileDetailsDAO.listFileDetailsByFileFilter(objFileDetails);
 	}
 	
+	public int countSuspiciousSystem(){
+		return this.fileDetailsDAO.countSuspiciousSystem();
+	}
+	
 	public FileDetails getFileDetailsById(int paramIntFileDetailsId) {
 		return this.fileDetailsDAO.getFileDetailsById(paramIntFileDetailsId);
 	}

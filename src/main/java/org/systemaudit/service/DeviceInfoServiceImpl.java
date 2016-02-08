@@ -31,6 +31,10 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 	public List<DeviceInfo> listDeviceInfo() {
 		return this.deviceInfoDAO.listDeviceInfo();
 	}
+	
+	public long countTotalDevice(){
+		return this.deviceInfoDAO.countTotalDevice();
+	}
 
 	public DeviceInfo getDeviceInfoByDeviceComputerName(String paramStringComputerName){
 		return this.deviceInfoDAO.getDeviceInfoByDeviceComputerName(paramStringComputerName);

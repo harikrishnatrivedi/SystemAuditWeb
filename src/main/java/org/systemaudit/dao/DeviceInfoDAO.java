@@ -13,6 +13,8 @@ public abstract interface DeviceInfoDAO
   public abstract void updateDeviceInfo(DeviceInfo paramObjDeviceInfo);
   
   public abstract List<DeviceInfo> listDeviceInfo();
+  
+  public abstract long countTotalDevice();
 
   public abstract DeviceInfo getDeviceInfoByDeviceComputerName(String paramStringComputerName);
   

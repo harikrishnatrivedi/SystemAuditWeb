@@ -13,19 +13,17 @@
 			<div class="col-lg-12">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">Filters</h3>
+						<h3 class="panel-title">
+							<c:choose>
+                            	<c:when test="${empty viewScheduleMessage}">View All Schedules</c:when>
+                            	<c:otherwise>${viewScheduleMessage}</c:otherwise>
+                            </c:choose>
+						</h3>
 					</div>
 					<div class="panel-body">
 
 						<fieldset>
 							<div class="panel-body">
-								<div class="form-group">
-									<label>Device Name : </label>
-<%-- 									<form:select path="schCompId" class="form-control" onchange="getSchedule(this);"> --%>
-<%-- 					   					<form:option value="">Select</form:option> --%>
-<%-- 								       	<form:options items="${lstObjDeviceInfo}" /> --%>
-<%-- 					   				</form:select> --%>
-								</div>
 								<div class="col-lg-12">
 				                    <div class="panel panel-default">
 				                        <div class="panel-heading">
@@ -33,16 +31,17 @@
 				                        </div>
 				                        <!-- /.panel-heading -->
 				                        <div class="panel-body">
-				                            <div class="table-responsive">
-				                                <table class="table table-striped table-bordered table-hover">
+				                            <div class="dataTable_wrapper">
+				                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
 				                                    <thead>
 				                                        <tr>
 				                                            <th>Sr No.</th>
+				                                            <th>Device Name</th>
+				                                            <th>User Name</th>
 				                                            <th>Schedule By</th>
-				                                            <th>Schedule Create Time</th>
 				                                            <th>Schedule Run Time</th>
+				                                            <th>Schedule Create Time</th>
 				                                            <th>Schedule Status</th>
-				                                            <th>Click To View</th>
 				                                        </tr>
 				                                    </thead>
 				                                    <tbody>
@@ -50,11 +49,12 @@
 										varStatus="idx">
 					                                    	<tr>
 					                                    		<td>${idx.index+1}</td>
+					                                    		<td>${objScheduleMaster.objDeviceInfo.compName}</td>
+					                                    		<td>${objScheduleMaster.objDeviceInfo.compUserName}</td>
 					                                            <td>${objScheduleMaster.schCreatedBy}</td>
-					                                            <td>${objScheduleMaster.schCreatedDate}</td>
 					                                            <td>${objScheduleMaster.schRunDateTime}</td>
+					                                            <td>${objScheduleMaster.schCreatedDate}</td>
 					                                            <td>${objScheduleMaster.schStatus}</td>
-					                                            <td><a href="#">View Files</a></td>
 					                                    	</tr>
 				                                    	</c:forEach>
 				                                    </tbody>
@@ -74,52 +74,6 @@
 				</div>
 
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">File Details</div>
-					<!-- /.panel-heading -->
-					<div class="panel-body">
-						<div class="dataTable_wrapper">
-							<table class="table table-striped table-bordered table-hover"
-								id="dataTables-example">
-								<thead>
-									<tr>
-										<th>Sr. No</th>
-										<th>Drive Letter</th>
-										<th>File Name</th>
-										<th>File Extension</th>
-										<th>File Path</th>
-										<th>File Size</th>
-										<th>File Status</th>
-										<th>Required Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${lstObjFileDetails}" var="objFileDetails"
-										varStatus="idx">
-											<tr>
-												<td>${idx.index+1}</td>
-												<td>${objFileDetails.fileDrive}</td>
-												<td>${objFileDetails.fileName}</td>
-												<td>${objFileDetails.fileExtension}</td>
-												<td>${objFileDetails.fileFullPath}</td>
-												<td>${objFileDetails.fileSize}</td>
-												<td>${objFileDetails.fileStatus}</td>
-												<td></td>
-											</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-						<!-- /.table-responsive -->
-					</div>
-					<!-- /.panel-body -->
-				</div>
-				<!-- /.panel -->
-			</div>
-			<!-- /.col-lg-12 -->
 		</div>
 	</tiles:putAttribute>
 </tiles:insertDefinition>

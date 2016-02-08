@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.systemaudit.model.ScheduleMaster;
@@ -23,34 +24,32 @@ public class ScheduleMasterDAOImpl extends GenericDAOImpl<ScheduleMaster, Intege
 		return getCurrentSession().createQuery("from ScheduleMaster").list();
 	}
 
-	public List<ScheduleMaster> listSuccessScheduleMasterByDeviceId(int paramIntComputerId){
-		Criteria criteria=getCurrentSession().createCriteria(ScheduleMaster.class).setFetchMode("objDeviceInfo", FetchMode.JOIN);
-		criteria.add(Restrictions.eq("objDeviceInfo.id", paramIntComputerId));
-		criteria.add(Restrictions.eq("schStatus", "S"));
-		return criteria.list();
+	@SuppressWarnings("unchecked")
+	public List<ScheduleMaster> listSuccessScheduleMasterByDeviceId(int paramIntComputerId) {
+		return getCurrentSession().createCriteria(ScheduleMaster.class).setFetchMode("objDeviceInfo", FetchMode.JOIN)
+				.add(Restrictions.eq("objDeviceInfo.id", paramIntComputerId))
+				.add(Restrictions.eq("schStatus", "S"))
+				.list();
+	}
+
+	public List<ScheduleMaster> listScheduleMasterByStatus(String paramStrScheduleMasterStatus) {
+		return getCurrentSession().createCriteria(ScheduleMaster.class).setFetchMode("objDeviceInfo", FetchMode.JOIN)
+				.add(Restrictions.eq("schStatus", paramStrScheduleMasterStatus))
+				.list();
+	}
+	
+	public long countSchedulesByStatus(String paramStrScheduleStatus){
+		return (long) getCurrentSession().createCriteria(ScheduleMaster.class).setProjection(Projections.rowCount())
+				.add(Restrictions.eq("schStatus", paramStrScheduleStatus)).uniqueResult();
 	}
 	
 	public ScheduleMaster getScheduleMasterByDeviceComputerId(int paramIntComputerId) {
-		
-		Criteria criteria=getCurrentSession().createCriteria(ScheduleMaster.class).setFetchMode("objDeviceInfo", FetchMode.JOIN);
+
+		Criteria criteria = getCurrentSession().createCriteria(ScheduleMaster.class).setFetchMode("objDeviceInfo",
+				FetchMode.JOIN);
 		criteria.add(Restrictions.eq("objDeviceInfo.id", paramIntComputerId));
 		criteria.add(Restrictions.eq("schStatus", "P"));
-		return (ScheduleMaster)criteria.uniqueResult();
-		/*criteria.setProjection(
-				Projections.projectionList()
-				.add(Projections.groupProperty("schId").as("schId"))
-				.add(Projections.groupProperty("schRunDateTime").as("schRunDateTime"))
-				.add(Projections.groupProperty("schCreatedDate").as("schCreatedDate"))
-				.add(Projections.groupProperty("schCreatedBy").as("schCreatedBy"))
-				.add(Projections.groupProperty("objDeviceInfo").as("objDeviceInfo"))
-				.add(Projections.groupProperty("objDeviceGroup").as("objDeviceGroup"))
-				.add(Projections.groupProperty("schStatus").as("schStatus"))
-		  		.add(Projections.max("schId"))
-				);
-		return (ScheduleMaster)criteria.setResultTransformer(Transformers.aliasToBean(ScheduleMaster.class)).uniqueResult();*/
-/*		return (ScheduleMaster) getCurrentSession().createQuery("from ScheduleMaster where objDeviceInfo = :compId")
-				.setParameter("compId", paramIntComputerId)
-				.uniqueResult();*/
+		return (ScheduleMaster) criteria.uniqueResult();
 	}
 
 	public ScheduleMaster getScheduleMasterById(int paramIntId) {

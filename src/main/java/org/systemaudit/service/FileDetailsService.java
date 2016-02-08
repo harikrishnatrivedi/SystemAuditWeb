@@ -20,6 +20,8 @@ public abstract interface FileDetailsService
   
   public abstract List<FileDetails> getSuspiciousFileDetailsByDeviceInfoIdAndStatus(int paramIntDeviceInfoCompId,String paramStrFileStatus);
   
+  public abstract int countSuspiciousSystem();
+  
   public abstract FileDetails getFileDetailsById(int paramIntFileDetailsId);
   
   public abstract void removeFileDetails(int paramIntFileDetailsId);

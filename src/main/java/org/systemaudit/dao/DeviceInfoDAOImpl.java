@@ -2,6 +2,7 @@ package org.systemaudit.dao;
 
 import java.util.List;
 
+import org.hibernate.criterion.Projections;
 import org.springframework.stereotype.Repository;
 import org.systemaudit.model.DeviceInfo;
 
@@ -18,6 +19,11 @@ public class DeviceInfoDAOImpl extends GenericDAOImpl<DeviceInfo, Integer> imple
 	@SuppressWarnings("unchecked")
 	public List<DeviceInfo> listDeviceInfo() {
 		return getCurrentSession().createQuery("from DeviceInfo").list();
+	}
+
+	public long countTotalDevice() {
+		return (long) getCurrentSession().createCriteria(DeviceInfo.class).setProjection(Projections.rowCount())
+				.uniqueResult();
 	}
 
 	public DeviceInfo getDeviceInfoByDeviceComputerName(String paramStringComputerName) {

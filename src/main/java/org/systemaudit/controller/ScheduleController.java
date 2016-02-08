@@ -33,7 +33,7 @@ public class ScheduleController {
 		if (session.getAttribute("empDetails") == null) {
 			return "redirect:/login";
 		}
-		
+		model.addAttribute("viewScheduleMessage", "View All Schedules");
 		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMaster());
 		
 		if(request.getParameter("schId")!=null)
@@ -41,17 +41,27 @@ public class ScheduleController {
 		
 		return "schedule/viewschedule";
 	}
-
-	@RequestMapping(value = { "/viewSchedules" }, method = RequestMethod.POST)
-	public String viewFileDetails(FileDetails objFileDetails, BindingResult result, ModelMap redirectedModel,
-			HttpSession session) {
+	
+	@RequestMapping(value = { "/viewPendingSchedules" }, method = RequestMethod.GET)
+	public String viewPendingSchedulesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
 		if (session.getAttribute("empDetails") == null) {
 			return "redirect:/login";
 		}
+		model.addAttribute("viewScheduleMessage", "View Pending Schedules");
+		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMasterByStatus("P"));
 		
 		return "schedule/viewschedule";
 	}
-
 	
-
+	@RequestMapping(value = { "/viewFailedSchedules" }, method = RequestMethod.GET)
+	public String viewFailedSchedulesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("empDetails") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("viewScheduleMessage", "View Failed Schedules");
+		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMasterByStatus("F"));
+		
+		return "schedule/viewschedule";
+	}
+	
 }

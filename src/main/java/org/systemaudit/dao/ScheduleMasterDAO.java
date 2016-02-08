@@ -16,6 +16,10 @@ public abstract interface ScheduleMasterDAO
 
   public abstract List<ScheduleMaster> listSuccessScheduleMasterByDeviceId(int paramIntComputerId);
   
+  public abstract long countSchedulesByStatus(String paramStrScheduleStatus);
+  
+  public abstract List<ScheduleMaster> listScheduleMasterByStatus(String paramStrScheduleMasterStatus);
+  
   public abstract ScheduleMaster getScheduleMasterByDeviceComputerId(int paramIntComputerId);
   
   public abstract ScheduleMaster getScheduleMasterById(int paramIntId);

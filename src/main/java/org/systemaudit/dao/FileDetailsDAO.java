@@ -22,6 +22,8 @@ public abstract interface FileDetailsDAO
   
   public abstract List<FileDetails> getSuspiciousFileDetailsByDeviceInfoIdAndStatus(int paramIntDeviceInfoId,String paramStrFileStatus);
 	
+  public abstract int countSuspiciousSystem();
+  
   public abstract FileDetails getFileDetailsById(int paramIntId);
   
   public abstract void removeFileDetails(int paramIntId);

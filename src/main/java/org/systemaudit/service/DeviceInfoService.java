@@ -12,6 +12,8 @@ public abstract interface DeviceInfoService
   
   public abstract List<DeviceInfo> listDeviceInfo();
   
+  public abstract long countTotalDevice();
+  
   public abstract DeviceInfo getDeviceInfoByDeviceComputerName(String paramStringComputerName);
   
   public abstract DeviceInfo getDeviceInfoById(int paramIntDeviceInfoId);
