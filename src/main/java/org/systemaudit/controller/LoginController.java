@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.systemaudit.model.EmployeeDetails;
+import org.systemaudit.model.EnumScheduleStatus;
 import org.systemaudit.model.FileDetails;
 import org.systemaudit.service.DeviceInfoService;
 import org.systemaudit.service.EmployeeDetailsService;
@@ -78,8 +79,8 @@ public class LoginController {
 			return "redirect:/login";
 		
 		redirectedModel.addAttribute("totalSystems", ((Long)objDeviceInfoService.countTotalDevice()).toString());
-		redirectedModel.addAttribute("pendingSchedules", ((Long)objScheduleMasterService.countSchedulesByStatus("P")).toString());
-		redirectedModel.addAttribute("failedSchedules", ((Long)objScheduleMasterService.countSchedulesByStatus("F")).toString());
+		redirectedModel.addAttribute("pendingSchedules", ((Long)objScheduleMasterService.countSchedulesByStatus(EnumScheduleStatus.PENDING)).toString());
+		redirectedModel.addAttribute("failedSchedules", ((Long)objScheduleMasterService.countSchedulesByStatus(EnumScheduleStatus.FAILED)).toString());
 		redirectedModel.addAttribute("suspiciousSystems", ((Integer)objFileDetailsService.countSuspiciousSystem()).toString());
 		
 		return "home";

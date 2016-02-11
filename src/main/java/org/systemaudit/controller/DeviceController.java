@@ -21,9 +21,8 @@ public class DeviceController {
 	@RequestMapping(value = { "/viewDevices" }, method = RequestMethod.GET)
 	public String viewGroupGet(ModelMap modelMap, HttpSession session) {
 
-		if (session.getAttribute("empDetails") == null) {
+		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		}
 
 		try {
 			List<DeviceInfo> lstObjDeviceInfo = objDeviceInfoService.listDeviceInfo();

@@ -12,6 +12,8 @@ import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 import org.systemaudit.model.FileDetails;
 import org.systemaudit.model.ScheduleMaster;
+import org.systemaudit.model.EnumFileFolderOperationStatus;
+import org.systemaudit.model.EnumScheduleStatus;
 
 @Repository("FileDetailsDAO")
 public class FileDetailsDAOImpl extends GenericDAOImpl<FileDetails, Integer> implements FileDetailsDAO {
@@ -43,18 +45,10 @@ public class FileDetailsDAOImpl extends GenericDAOImpl<FileDetails, Integer> imp
 	@SuppressWarnings("unchecked")
 	public List<FileDetails> listFileDetailsByFileFilter(FileDetails objFileDetails) {
 		Criteria criteria = getCurrentSession().createCriteria(FileDetails.class, "FileDetails")
-				.createAlias("FileDetails.objDeviceInfo", "DeviceInfo")
-				.add(Restrictions.eq("DeviceInfo.compId", objFileDetails.getObjDeviceInfo().getCompId()))
-				.createAlias("FileDetails.objScheduleMaster", "ScheduleMaster")
-				.add(Restrictions.eq("ScheduleMaster.schId", objFileDetails.getObjScheduleMaster().getSchId()))
-				.add(Restrictions.eq("ScheduleMaster.schStatus", "S"));
-
-		// .setFetchMode("objDeviceInfo",
-		// FetchMode.JOIN).setFetchMode("objScheduleMaster", FetchMode.JOIN);
-		// criteria.add(Restrictions.eq("objDeviceInfo.id",
-		// objFileDetails.getObjDeviceInfo().getCompId()));
-		// criteria.add(Restrictions.eq("objScheduleMaster.id",
-		// objFileDetails.getObjScheduleMaster().getSchId()));
+				.setFetchMode("objDeviceInfo", FetchMode.JOIN).setFetchMode("objScheduleMaster", FetchMode.JOIN)
+				.add(Restrictions.eq("objDeviceInfo.compId", objFileDetails.getObjDeviceInfo().getCompId()))
+				.add(Restrictions.eq("objScheduleMaster.schId", objFileDetails.getObjScheduleMaster().getSchId()))
+				.add(Restrictions.eq("objScheduleMaster.schStatus", "S"));
 
 		if (objFileDetails.getFileName() != null && !objFileDetails.getFileName().isEmpty())
 			criteria.add(Restrictions.ilike("fileName", objFileDetails.getFileName(), MatchMode.ANYWHERE));
@@ -69,7 +63,7 @@ public class FileDetailsDAOImpl extends GenericDAOImpl<FileDetails, Integer> imp
 		if (objFileDetails.getFileExtension() != null && !objFileDetails.getFileExtension().isEmpty())
 			criteria.add(Restrictions.ilike("fileExtension", objFileDetails.getFileExtension(), MatchMode.ANYWHERE));
 
-		// criteria.setResultTransformer(Transformers.aliasToBean(FileDetails.class));
+		//criteria.setProjection(Projections.max("schId"));
 		return criteria.list();
 
 	}
@@ -77,11 +71,9 @@ public class FileDetailsDAOImpl extends GenericDAOImpl<FileDetails, Integer> imp
 	public int countSuspiciousSystem(){
 		return getCurrentSession().createCriteria(FileDetails.class)
 		.setProjection(Projections.groupProperty("objDeviceInfo.id"))
-		.add(Restrictions.disjunction()
-				.add(Restrictions.ilike("fileExtension", "dll", MatchMode.ANYWHERE))
-				.add(Restrictions.ilike("fileExtension", "exe", MatchMode.ANYWHERE))
-				.add(Restrictions.ilike("fileExtension", "msi", MatchMode.ANYWHERE))
-				).list().size();
+		.add(Restrictions.eq("fileStatus", EnumFileFolderOperationStatus.SUSPICIOUS))
+		.add(Restrictions.eq("schStatus", EnumScheduleStatus.SUCCESS))
+		.setProjection(Projections.max("schId")).list().size();
 	}
 
 	public FileDetails getFileDetailsById(int paramIntId) {
@@ -90,10 +82,11 @@ public class FileDetailsDAOImpl extends GenericDAOImpl<FileDetails, Integer> imp
 
 	@SuppressWarnings("unchecked")
 	public List<FileDetails> getSuspiciousFileDetailsByDeviceInfoIdAndStatus(int paramIntDeviceInfoId,
-			String paramStrFileStatus) {
+			EnumFileFolderOperationStatus paramEnumFileFolderOperationStatus) {
 		return getCurrentSession()
 				.createQuery("from FileDetails where objDeviceInfo.compId= :compId and fileStatus= :fileStatus")
-				.setParameter("compId", paramIntDeviceInfoId).setParameter("fileStatus", paramStrFileStatus).list();
+				.setParameter("compId", paramIntDeviceInfoId)
+				.setParameter("fileStatus", paramEnumFileFolderOperationStatus).list();
 	}
 
 	public void removeFileDetails(int paramIntId) {

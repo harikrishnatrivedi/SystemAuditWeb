@@ -24,9 +24,9 @@ public class GroupController {
 	@RequestMapping(value = { "/addGroup" }, method = RequestMethod.GET)
 	public String addGroupGet(DeviceGroup objDeviceGroup, BindingResult result, ModelMap model,
 			HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("empDetails") == null) {
+		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		}
+		
 		model.addAttribute("deviceGroup", new DeviceGroup());
 		return "group/addgroup";
 	}
@@ -34,9 +34,8 @@ public class GroupController {
 	@RequestMapping(value = { "/addGroup" }, method = RequestMethod.POST)
 	public String addGroupPost(DeviceGroup deviceGroup, BindingResult result, ModelMap redirectedModel,
 			HttpSession session) {
-		if (session.getAttribute("empDetails") == null) {
+		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		}
 		if (deviceGroup.getGrpName() == null || deviceGroup.getGrpName().isEmpty()) {
 			result.addError(new FieldError("grpName", "grpName", "Group name can not be blank."));
 			return "group/addgroup";
@@ -60,9 +59,8 @@ public class GroupController {
 
 	@RequestMapping(value = { "/viewGroups" }, method = RequestMethod.GET)
 	public String viewGroupGet(DeviceGroup deviceGroup, BindingResult result, ModelMap modelMap, HttpSession session) {
-		if (session.getAttribute("empDetails") == null) {
+		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		}
 
 		try {
 			List<DeviceGroup> lstObjChkDeviceGroup = objDeviceGroupService.listDeviceGroup();

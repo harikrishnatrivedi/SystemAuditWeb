@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.systemaudit.model.EmployeeDetails;
 
 
-@Repository("EmployeeDetailsDAO")
+@Repository("EmployeeDetailsDAOImpl")
 public class EmployeeDetailsDAOImpl
   extends GenericDAOImpl<EmployeeDetails, Integer>
   implements EmployeeDetailsDAO

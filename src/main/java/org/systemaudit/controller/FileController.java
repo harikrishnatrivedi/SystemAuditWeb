@@ -15,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.systemaudit.model.DeviceInfo;
+import org.systemaudit.model.EnumScheduleStatus;
 import org.systemaudit.model.FileDetails;
 import org.systemaudit.model.ScheduleMaster;
 import org.systemaudit.service.DeviceInfoService;
@@ -36,9 +37,8 @@ public class FileController {
 	@RequestMapping(value = { "/viewFiles" }, method = RequestMethod.GET)
 	public String viewFilesGet(FileDetails objFileDetails, BindingResult result, ModelMap model,
 			HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("empDetails") == null) {
+		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		}
 		List<DeviceInfo> lstObjDeviceInfo=objDeviceInfoService.listDeviceInfo();
 		Map<String, String> mapObjDeviceInfo=new HashMap<String, String>();
 		for(DeviceInfo objDeviceInfo : lstObjDeviceInfo)
@@ -52,9 +52,8 @@ public class FileController {
 	@RequestMapping(value = { "/viewFiles" }, method = RequestMethod.POST)
 	public String viewFileDetails(FileDetails objFileDetails, BindingResult result, ModelMap redirectedModel,
 			HttpSession session) {
-		if (session.getAttribute("empDetails") == null) {
+		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		}
 		List<DeviceInfo> lstObjDeviceInfo=objDeviceInfoService.listDeviceInfo();
 		Map<String, String> mapObjDeviceInfo=new HashMap<String, String>();
 		for(DeviceInfo objDeviceInfo : lstObjDeviceInfo)
@@ -69,12 +68,12 @@ public class FileController {
 			}
 			if(objFileDetails.getObjDeviceInfo()!=null && objFileDetails.getObjDeviceInfo().getCompId()!=null){
 				Map<String, String> mapObjScheduleMaster=new HashMap<String, String>();
-				List<ScheduleMaster> lstObjScheduleMaster=objScheduleMasterService.listSuccessScheduleMasterByDeviceId(objFileDetails.getObjDeviceInfo().getCompId());
+				List<ScheduleMaster> lstObjScheduleMaster=objScheduleMasterService.listScheduleMasterByDeviceIdAndScheduleStatus(objFileDetails.getObjDeviceInfo().getCompId(), EnumScheduleStatus.SUCCESS);
 				
 				//System.out.println("lstObjScheduleMaster : "+lstObjScheduleMaster);
 				
 				for(ScheduleMaster objScheduleMaster : lstObjScheduleMaster)
-					mapObjScheduleMaster.put(((Integer)objScheduleMaster.getSchId()).toString(), objScheduleMaster.getSchRunDateTime().toString());
+					mapObjScheduleMaster.put(((Integer)objScheduleMaster.getSchId()).toString(), objScheduleMaster.getSchActualRunDateTime().toString());
 				
 				//System.out.println("mapObjScheduleMaster : "+mapObjScheduleMaster);
 				

@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,10 +35,15 @@ public class FileDetails {
 	@Column(name = "FILE_ID", nullable = false)
 	private int fileId;
 
-	@Size(max = 500)
+	@Size(max = 1500)
 	@NotBlank
 	@Column(name = "FILE_FULL_PATH", nullable = false)
 	private String fileFullPath;
+
+	@Size(max = 1250)
+	@NotBlank
+	@Column(name = "FILE_FOLDER_PATH", nullable = false)
+	private String fileFolderPath;
 
 	@Size(max = 255)
 	@NotBlank
@@ -47,16 +54,16 @@ public class FileDetails {
 	@Column(name = "FILE_EXTENSION", nullable = true)
 	private String fileExtension;
 
-	@Size(max = 10)
+	@Size(max = 5)
 	@Column(name = "FILE_DRIVE", nullable = false)
 	private String fileDrive;
 
 	@Column(name = "FILE_SIZE", nullable = true)
 	private long fileSize;
 
-	@Size(max = 10)
-	@Column(name = "FILE_STATUS", nullable = false, columnDefinition = "character varying(10) default 'GOOD'")
-	private String fileStatus = "GOOD";
+	@Column(name = "FILE_STATUS", nullable = false, columnDefinition = "character varying(15) default 'GOOD'")
+	@Enumerated(EnumType.STRING)
+	private EnumFileFolderOperationStatus fileStatus = EnumFileFolderOperationStatus.GOOD;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FILE_COMP_ID", referencedColumnName = "COMP_ID")
@@ -90,7 +97,7 @@ public class FileDetails {
 	/**
 	 * @return the fileStatus
 	 */
-	public String getFileStatus() {
+	public EnumFileFolderOperationStatus getFileStatus() {
 		return fileStatus;
 	}
 
@@ -98,7 +105,7 @@ public class FileDetails {
 	 * @param fileStatus
 	 *            the fileStatus to set
 	 */
-	public void setFileStatus(String fileStatus) {
+	public void setFileStatus(EnumFileFolderOperationStatus fileStatus) {
 		this.fileStatus = fileStatus;
 	}
 
@@ -130,6 +137,21 @@ public class FileDetails {
 	 */
 	public void setFileFullPath(String fileFullPath) {
 		this.fileFullPath = fileFullPath;
+	}
+
+	/**
+	 * @return the fileFolderPath
+	 */
+	public String getFileFolderPath() {
+		return fileFolderPath;
+	}
+
+	/**
+	 * @param fileFolderPath
+	 *            the fileFolderPath to set
+	 */
+	public void setFileFolderPath(String fileFolderPath) {
+		this.fileFolderPath = fileFolderPath;
 	}
 
 	/**
@@ -239,7 +261,7 @@ public class FileDetails {
 
 	@Override
 	public String toString() {
-		return "objFileDetails [fileId=" + fileId + ", fileFullPath=" + fileFullPath + ", fileName=" + fileName
+		return "objFileDetails [fileId=" + fileId + ", fileFullPath=" + fileFullPath + ", fileFolderPath=" + fileFolderPath + ", fileName=" + fileName
 				+ ", fileSize=" + fileSize + ", fileExtension=" + fileExtension + ", fileDrive=" + fileDrive
 				+ ", objDeviceInfo=" + objDeviceInfo + ", objScheduleMaster="+objScheduleMaster+"]";
 	}

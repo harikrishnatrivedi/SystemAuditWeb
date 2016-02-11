@@ -30,9 +30,9 @@ public class DeviceGroup {
 	@Column(name = "GRP_ID", nullable = false)
 	private int grpId;
 
-	@NotBlank
 	@Column(unique=true, name = "GRP_NAME", nullable = false)
-	@Size(min=1, max = 50)
+	@NotBlank
+	@Size(max = 50)
 	private String grpName;
 
 	@Column(name = "GRP_DESCRIPTION", nullable = true)
@@ -41,6 +41,9 @@ public class DeviceGroup {
 
 	@OneToMany(mappedBy = "objDeviceGroup")
 	private List<DeviceInfo> lstObjDeviceInfo;
+
+	@OneToMany(mappedBy = "objDeviceGroup")
+	private List<ScheduleMaster> lstObjScheduleMaster;
 
 	/**
 	 * @return the grpId
@@ -102,10 +105,24 @@ public class DeviceGroup {
 		this.lstObjDeviceInfo = lstObjDeviceInfo;
 	}
 
-	
+	/**
+	 * @return the lstObjScheduleMaster
+	 */
+	public List<ScheduleMaster> getLstObjScheduleMaster() {
+		return lstObjScheduleMaster;
+	}
+
+	/**
+	 * @param lstObjScheduleMaster
+	 *            the lstObjScheduleMaster to set
+	 */
+	public void setLstObjScheduleMaster(List<ScheduleMaster> lstObjScheduleMaster) {
+		this.lstObjScheduleMaster = lstObjScheduleMaster;
+	}
+
 	@Override
 	public String toString() {
 		return "objDeviceInfo [grpId=" + grpId + ", grpName=" + grpName + ", grpDescription=" + grpDescription
-				+ ", lstObjDeviceInfo=" + lstObjDeviceInfo + "]";
+				+ ", lstObjDeviceInfo=" + lstObjDeviceInfo + ", lstObjScheduleMaster=" + lstObjScheduleMaster + "]";
 	}
 }

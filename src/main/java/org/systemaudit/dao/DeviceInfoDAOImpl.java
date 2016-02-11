@@ -6,7 +6,7 @@ import org.hibernate.criterion.Projections;
 import org.springframework.stereotype.Repository;
 import org.systemaudit.model.DeviceInfo;
 
-@Repository("DeviceInfoDAO")
+@Repository("DeviceInfoDAOImpl")
 public class DeviceInfoDAOImpl extends GenericDAOImpl<DeviceInfo, Integer> implements DeviceInfoDAO {
 	public void addDeviceInfo(DeviceInfo paramObjDeviceInfo) {
 		getCurrentSession().persist(paramObjDeviceInfo);

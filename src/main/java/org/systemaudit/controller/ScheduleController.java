@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.systemaudit.model.DeviceInfo;
+import org.systemaudit.model.EnumScheduleStatus;
 import org.systemaudit.model.FileDetails;
 import org.systemaudit.model.ScheduleMaster;
 import org.systemaudit.service.DeviceInfoService;
@@ -30,9 +31,9 @@ public class ScheduleController {
 
 	@RequestMapping(value = { "/viewSchedules" }, method = RequestMethod.GET)
 	public String viewFilesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("empDetails") == null) {
+		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		}
+
 		model.addAttribute("viewScheduleMessage", "View All Schedules");
 		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMaster());
 		
@@ -44,22 +45,22 @@ public class ScheduleController {
 	
 	@RequestMapping(value = { "/viewPendingSchedules" }, method = RequestMethod.GET)
 	public String viewPendingSchedulesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("empDetails") == null) {
+		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		}
+		
 		model.addAttribute("viewScheduleMessage", "View Pending Schedules");
-		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMasterByStatus("P"));
+		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMasterByStatus(EnumScheduleStatus.PENDING));
 		
 		return "schedule/viewschedule";
 	}
 	
 	@RequestMapping(value = { "/viewFailedSchedules" }, method = RequestMethod.GET)
 	public String viewFailedSchedulesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("empDetails") == null) {
+		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		}
+		
 		model.addAttribute("viewScheduleMessage", "View Failed Schedules");
-		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMasterByStatus("F"));
+		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMasterByStatus(EnumScheduleStatus.FAILED));
 		
 		return "schedule/viewschedule";
 	}

@@ -9,6 +9,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,9 +39,13 @@ public class ScheduleMaster {
 	@Column(name = "SCH_ID", nullable = false)
 	private Integer schId;
 
-	@Column(name = "SCH_RUN_DATETIME", nullable = false)
+	@Column(name = "SCH_ACTUAL_RUN_DATETIME", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date schRunDateTime;
+	private Date schActualRunDateTime;
+
+	@Column(name = "SCH_SCHEDULED_DATETIME", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date schScheduledDateTime;
 
 	@Column(name = "SCH_CREATED_DATE", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -49,9 +55,10 @@ public class ScheduleMaster {
 	@Size(max = 15)
 	private String schCreatedBy;
 
-	@Column(name = "SCH_STATUS", nullable = true)
-	@Size(max = 1)
-	private String schStatus;
+	
+	@Column(name = "SCH_STATUS", nullable = false, columnDefinition = "character varying(15) default 'PENDING'")
+	@Enumerated(EnumType.STRING)
+	private EnumScheduleStatus schStatus = EnumScheduleStatus.PENDING;
 
 	@ManyToOne
 	@JoinColumn(name = "SCH_COMP_ID", referencedColumnName = "COMP_ID")
@@ -63,6 +70,10 @@ public class ScheduleMaster {
 
 	@OneToMany(mappedBy = "objScheduleMaster")
 	private List<FileDetails> lstObjFileDetails;
+
+	@OneToMany(mappedBy = "objScheduleMaster")
+	private List<FolderOperationRequest> lstObjFolderOperationRequest;
+
 	
 	/**
 	 * @return the schId
@@ -80,18 +91,33 @@ public class ScheduleMaster {
 	}
 
 	/**
-	 * @return the schRunDateTime
+	 * @return the schActualRunDateTime
 	 */
-	public Date getSchRunDateTime() {
-		return schRunDateTime;
+	public Date getSchActualRunDateTime() {
+		return schActualRunDateTime;
 	}
 
 	/**
-	 * @param schRunDateTime
-	 *            the schRunDateTime to set
+	 * @param schActualRunDateTime
+	 *            the schActualRunDateTime to set
 	 */
-	public void setSchRunDateTime(Date schRunDateTime) {
-		this.schRunDateTime = schRunDateTime;
+	public void setSchActualRunDateTime(Date schActualRunDateTime) {
+		this.schActualRunDateTime = schActualRunDateTime;
+	}
+
+	/**
+	 * @return the schScheduledDateTime
+	 */
+	public Date getSchScheduledDateTime() {
+		return schScheduledDateTime;
+	}
+
+	/**
+	 * @param schScheduledDateTime
+	 *            the schScheduledDateTime to set
+	 */
+	public void setSchScheduledDateTime(Date schScheduledDateTime) {
+		this.schScheduledDateTime = schScheduledDateTime;
 	}
 
 	/**
@@ -125,17 +151,17 @@ public class ScheduleMaster {
 	}
 
 	/**
-	 * @return the schStatus
+	 * @return the schScheduleStatus
 	 */
-	public String getSchStatus() {
+	public EnumScheduleStatus getSchStatus() {
 		return schStatus;
 	}
 
 	/**
-	 * @param schStatus
-	 *            the schStatus to set
+	 * @param schScheduleStatus
+	 *            the schScheduleStatus to set
 	 */
-	public void setSchStatus(String schStatus) {
+	public void setSchStatus(EnumScheduleStatus schStatus) {
 		this.schStatus = schStatus;
 	}
 
@@ -186,8 +212,9 @@ public class ScheduleMaster {
 
 	@Override
 	public String toString() {
-		return "objScheduleMaster [schId=" + schId + ", schRunDateTime=" + schRunDateTime + ", schCreatedDate="
-				+ schCreatedDate + ", schCreatedBy=" + schCreatedBy + ", objDeviceInfo=" + objDeviceInfo
-				/*+ ", lstObjFileDetails=" + lstObjFileDetails*/ + ", objDeviceGroup=" + objDeviceGroup + "]";
+		return "objScheduleMaster [schId=" + schId + ", schActualRunDateTime=" + schActualRunDateTime
+				+ ", schScheduledDateTime=" + schScheduledDateTime + ", schCreatedDate=" + schCreatedDate
+				+ ", schCreatedBy=" + schCreatedBy + ", objDeviceInfo=" + objDeviceInfo + ", schStatus="+schStatus
+				/* + ", lstObjFileDetails=" + lstObjFileDetails */ + ", objDeviceGroup=" + objDeviceGroup + "]";
 	}
 }
