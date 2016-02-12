@@ -45,7 +45,8 @@ public class FileDetailsDAOImpl extends GenericDAOImpl<FileDetails, Integer> imp
 	@SuppressWarnings("unchecked")
 	public List<FileDetails> listFileDetailsByFileFilter(FileDetails objFileDetails) {
 		Criteria criteria = getCurrentSession().createCriteria(FileDetails.class, "FileDetails")
-				.setFetchMode("objDeviceInfo", FetchMode.JOIN).setFetchMode("objScheduleMaster", FetchMode.JOIN)
+				.createAlias("objDeviceInfo", "objDeviceInfo")
+				.createAlias("objScheduleMaster", "objScheduleMaster")
 				.add(Restrictions.eq("objDeviceInfo.compId", objFileDetails.getObjDeviceInfo().getCompId()))
 				.add(Restrictions.eq("objScheduleMaster.schId", objFileDetails.getObjScheduleMaster().getSchId()))
 				.add(Restrictions.eq("objScheduleMaster.schStatus", "S"));
@@ -72,8 +73,7 @@ public class FileDetailsDAOImpl extends GenericDAOImpl<FileDetails, Integer> imp
 		return getCurrentSession().createCriteria(FileDetails.class)
 		.setProjection(Projections.groupProperty("objDeviceInfo.id"))
 		.add(Restrictions.eq("fileStatus", EnumFileFolderOperationStatus.SUSPICIOUS))
-		.add(Restrictions.eq("schStatus", EnumScheduleStatus.SUCCESS))
-		.setProjection(Projections.max("schId")).list().size();
+		.setProjection(Projections.max("objScheduleMaster.id")).list().size();
 	}
 
 	public FileDetails getFileDetailsById(int paramIntId) {

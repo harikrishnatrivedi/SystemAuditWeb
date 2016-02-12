@@ -74,7 +74,7 @@
                                     <a href="./viewSchedules">View All Schedules</a>
                                 </li>
                                 <li>
-                                    <a href="#">View Success Schedules</a>
+                                    <a href="./viewSuccessSchedules">View Success Schedules</a>
                                 </li>
                                 <li>
                                     <a href="./viewPendingSchedules">View Pending Schedules</a>

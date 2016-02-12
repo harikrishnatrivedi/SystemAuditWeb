@@ -47,9 +47,18 @@ public class ScheduleController {
 	public String viewPendingSchedulesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
 		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		
 		model.addAttribute("viewScheduleMessage", "View Pending Schedules");
 		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMasterByStatus(EnumScheduleStatus.PENDING));
+		
+		return "schedule/viewschedule";
+	}
+	
+	@RequestMapping(value = { "/viewSuccessSchedules" }, method = RequestMethod.GET)
+	public String viewSuccessSchedulesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("empDetails") == null)
+			return "redirect:/login";
+		model.addAttribute("viewScheduleMessage", "View Success Schedules");
+		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMasterByStatus(EnumScheduleStatus.SUCCESS));
 		
 		return "schedule/viewschedule";
 	}
@@ -58,7 +67,7 @@ public class ScheduleController {
 	public String viewFailedSchedulesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
 		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
-		
+	
 		model.addAttribute("viewScheduleMessage", "View Failed Schedules");
 		model.addAttribute("lstObjScheduleMaster", objScheduleMasterService.listScheduleMasterByStatus(EnumScheduleStatus.FAILED));
 		

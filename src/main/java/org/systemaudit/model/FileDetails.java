@@ -3,6 +3,7 @@
  */
 package org.systemaudit.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
@@ -73,11 +76,17 @@ public class FileDetails {
 	@JoinColumn(name = "FILE_SCH_ID", referencedColumnName = "SCH_ID")
 	private ScheduleMaster objScheduleMaster;
 
-	@Transient
-	private List<DeviceInfo> lstObjDeviceInfo;
+	@Column(name = "FILE_CREATION_DATE", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fileCreationDate;
 
-	@Transient
-	private List<ScheduleMaster> lstObjScheduleMaster;
+	@Column(name = "FILE_LAST_ACCESS_DATE", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fileLastAccessDate;
+
+	@Column(name = "FILE_LAST_MODIFIED_DATE", nullable = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fileLastModifiedDate;
 
 	/**
 	 * @return the objScheduleMaster
@@ -230,39 +239,55 @@ public class FileDetails {
 	}
 
 	/**
-	 * @return the lstObjDeviceInfo
+	 * @return the fileCreationDate
 	 */
-	public List<DeviceInfo> getLstObjDeviceInfo() {
-		return lstObjDeviceInfo;
+	public Date getFileCreationDate() {
+		return fileCreationDate;
 	}
 
 	/**
-	 * @param lstObjDeviceInfo
-	 *            the lstObjDeviceInfo to set
+	 * @param fileCreationDate
+	 *            the fileCreationDate to set
 	 */
-	public void setLstObjDeviceInfo(List<DeviceInfo> lstObjDeviceInfo) {
-		this.lstObjDeviceInfo = lstObjDeviceInfo;
+	public void setFileCreationDate(Date fileCreationDate) {
+		this.fileCreationDate = fileCreationDate;
 	}
 
 	/**
-	 * @return the lstObjScheduleMaster
+	 * @return the fileLastAccessDate
 	 */
-	public List<ScheduleMaster> getLstObjScheduleMaster() {
-		return lstObjScheduleMaster;
+	public Date getFileLastAccessDate() {
+		return fileLastAccessDate;
 	}
 
 	/**
-	 * @param lstObjScheduleMaster
-	 *            the lstObjScheduleMaster to set
+	 * @param fileLastAccessDate
+	 *            the fileLastAccessDate to set
 	 */
-	public void setLstObjScheduleMaster(List<ScheduleMaster> lstObjScheduleMaster) {
-		this.lstObjScheduleMaster = lstObjScheduleMaster;
+	public void setFileLastAccessDate(Date fileLastAccessDate) {
+		this.fileLastAccessDate = fileLastAccessDate;
+	}
+
+	/**
+	 * @return the fileLastModifiedDate
+	 */
+	public Date getFileLastModifiedDate() {
+		return fileLastModifiedDate;
+	}
+
+	/**
+	 * @param fileLastModifiedDate
+	 *            the fileLastModifiedDate to set
+	 */
+	public void setFileLastModifiedDate(Date fileLastModifiedDate) {
+		this.fileLastModifiedDate = fileLastModifiedDate;
 	}
 
 	@Override
 	public String toString() {
-		return "objFileDetails [fileId=" + fileId + ", fileFullPath=" + fileFullPath + ", fileFolderPath=" + fileFolderPath + ", fileName=" + fileName
-				+ ", fileSize=" + fileSize + ", fileExtension=" + fileExtension + ", fileDrive=" + fileDrive
-				+ ", objDeviceInfo=" + objDeviceInfo + ", objScheduleMaster="+objScheduleMaster+"]";
+		return "objFileDetails [fileId=" + fileId + ", fileFullPath=" + fileFullPath + ", fileFolderPath="
+				+ fileFolderPath + ", fileName=" + fileName + ", fileSize=" + fileSize + ", fileExtension="
+				+ fileExtension + ", fileDrive=" + fileDrive + ", objDeviceInfo=" + objDeviceInfo
+				+ ", objScheduleMaster=" + objScheduleMaster + "]";
 	}
 }
