@@ -62,7 +62,7 @@
                                     <a href="./viewDevices">View Devices</a>
                                 </li>
                                 <li>
-                                    <a href="./viewSuspiciousSystems">View Suspicious Devices</a>
+                                    <a href="./viewSuspiciousDevices">View Suspicious Devices</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -74,7 +74,7 @@
                                     <a href="./viewSchedules">View All Schedules</a>
                                 </li>
                                 <li>
-                                    <a href="#">View Success Schedules</a>
+                                    <a href="./viewSuccessSchedules">View Success Schedules</a>
                                 </li>
                                 <li>
                                     <a href="./viewPendingSchedules">View Pending Schedules</a>

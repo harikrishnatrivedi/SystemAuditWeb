@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="org.systemaudit.model.EnumFileFolderOperationStatus"%>
 <tiles:insertDefinition name="layoutTemplate">
 	<tiles:putAttribute name="body">
 		<div class="row">
@@ -56,6 +57,13 @@
 											<form:input path="fileDrive" class="form-control"
 												placeholder="Enter File Drive Filter." />
 										</div>
+										<div class="form-group">
+											<label>File Status : </label>
+											<form:select path="fileStatus" class="form-control">
+												<form:options items="${fileStatusEnum}" />
+											</form:select>
+										</div>
+										
 									</div>
 								</div>
 								<div class="panel-footer">
@@ -71,14 +79,30 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">File Details</div>
+					<div class="panel-heading">
+						File Details
+						<select id="selectFileAction" class="form-control">
+							<option id="${EnumFileFolderOperationStatus.GOOD}">GOOD</option>
+							<option id="${EnumFileFolderOperationStatus.MOVEREQUEST}">Move Request</option>
+							<option id="${EnumFileFolderOperationStatus.DELETEREQUEST}">Delete Request</option>
+							<option id="${EnumFileFolderOperationStatus.SECPICIOUS}">Suspicious</option>
+						</select>
+						<button type="button" id="btnDeleteRequest" class="btn btn-success" style="float: right;">Apply Action</button>
+					</div>
 					<!-- /.panel-heading -->
 					<div class="panel-body">
 						<div class="dataTable_wrapper">
 							<table class="table table-striped table-bordered table-hover"
-								id="dataTables-example">
+								id="dataTables-example" 
+								data-toggle="table"
+					               data-pagination="true"
+					               data-side-pagination="server"
+					               data-url="/examples/bootstrap_table/data"
+					               
+					               data-response-handler="responseHandler"><!-- /examples/bootstrap_table/data -->
 								<thead>
 									<tr>
+										<th data-field="state" data-checkbox="true"></th>
 										<th>Sr No</th>
 										<th></th>
 										<th>File Name</th>
@@ -86,21 +110,31 @@
 										<th>File Path</th>
 										<th>File Size</th>
 										<th>File Status</th>
-										<th>Action</th>
+										
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${lstObjFileDetails}" var="objFileDetails"
 										varStatus="idx">
 											<tr>
+												<td>
+													<c:choose>
+														<c:when test="${objFileDetails.fileStatus ne EnumFileFolderOperationStatus.DELETED and objFileDetails.fileStatus ne EnumFileFolderOperationStatus.NOTEXIST }">
+															<input type="checkbox" value="${objFileDetails.fileId}" name="fileAction" />
+														</c:when>
+														<c:otherwise>
+															<input type="checkbox" value="${objFileDetails.fileId}" checked="false" name="fileAction" />
+														</c:otherwise>
+													</c:choose>
+												</td>
 												<td>${idx.index+1}</td>
 												<td>${objFileDetails.fileDrive}</td>
 												<td>${objFileDetails.fileName}</td>
 												<td>${objFileDetails.fileExtension}</td>
-												<td>${objFileDetails.fileFullPath}</td>
+												<td>${objFileDetails.fileFolderPath}</td>
 												<td>
 													<c:choose>
-														<c:when test="${objFileDetails.fileSize gt 1000}">
+														<c:when test="${objFileDetails.fileSize gt 1000000}">
 															<fmt:formatNumber value="${objFileDetails.fileSize div 1000 div 1000}" maxFractionDigits="3"/> MB
 														</c:when>
 														<c:otherwise>
@@ -109,7 +143,7 @@
 													</c:choose>
 												</td>
 												<td>${objFileDetails.fileStatus}</td>
-												<td></td>
+												
 											</tr>
 									</c:forEach>
 								</tbody>

@@ -15,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.systemaudit.model.DeviceInfo;
+import org.systemaudit.model.EnumFileFolderOperationStatus;
 import org.systemaudit.model.EnumScheduleStatus;
 import org.systemaudit.model.FileDetails;
 import org.systemaudit.model.ScheduleMaster;
@@ -46,6 +47,7 @@ public class FileController {
 		
 		model.addAttribute("mapObjDeviceInfo", mapObjDeviceInfo);
 		model.addAttribute("fileDetails", objFileDetails);
+		model.addAttribute("fileStatusEnum", EnumFileFolderOperationStatus.values());
 		return "filedetails/viewfiles";
 	}
 

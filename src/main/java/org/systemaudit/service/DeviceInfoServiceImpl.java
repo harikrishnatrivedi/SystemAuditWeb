@@ -32,6 +32,10 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
 		return this.deviceInfoDAO.listDeviceInfo();
 	}
 	
+	public List<DeviceInfo> listSuspiciousSytemByLatestSchedule(){
+		return this.deviceInfoDAO.listSuspiciousSytemByLatestSchedule();
+	}
+	
 	public long countTotalDevice(){
 		return this.deviceInfoDAO.countTotalDevice();
 	}

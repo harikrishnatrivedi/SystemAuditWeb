@@ -33,5 +33,22 @@ public class DeviceController {
 
 		return "device/viewdevices";
 	}
+	
+	@RequestMapping(value = { "/viewSuspiciousDevices" }, method = RequestMethod.GET)
+	public String viewSuspiciousDevicesGet(ModelMap modelMap, HttpSession session) {
+
+		if (session.getAttribute("empDetails") == null)
+			return "redirect:/login";
+		
+		try {
+			List<DeviceInfo> lstObjDeviceInfo = objDeviceInfoService.listSuspiciousSytemByLatestSchedule();
+			System.out.println("lstObjDeviceInfo ::: "+lstObjDeviceInfo);
+			modelMap.addAttribute("lstObjDeviceInfo", lstObjDeviceInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "device/viewdevices";
+	}
 
 }

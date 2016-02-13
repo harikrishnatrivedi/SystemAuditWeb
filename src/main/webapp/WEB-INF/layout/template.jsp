@@ -78,5 +78,25 @@
 					responsive : true
 				});
 			});
+
+			
+			var $table = $('#dataTables-example'),
+	        selections = [];
+	    $(function () {
+	        $table.on('check.bs.table check-all.bs.table ' +
+	                'uncheck.bs.table uncheck-all.bs.table', function (e, rows) {
+	            var ids = $.map(!$.isArray(rows) ? [rows] : rows, function (row) {
+	                    return row.id;
+	                }),
+	                func = $.inArray(e.type, ['check', 'check-all']) > -1 ? 'union' : 'difference';
+	            selections = _[func](selections, ids);
+	        });
+	    });
+	    function responseHandler(res) {
+	        $.each(res.rows, function (i, row) {
+	            row.state = $.inArray(row.id, selections) !== -1;
+	        });
+	        return res;
+	    }
 		</script>
 </html>

@@ -49,8 +49,8 @@ public class FileDetailsDAOImpl extends GenericDAOImpl<FileDetails, Integer> imp
 				.createAlias("objScheduleMaster", "objScheduleMaster")
 				.add(Restrictions.eq("objDeviceInfo.compId", objFileDetails.getObjDeviceInfo().getCompId()))
 				.add(Restrictions.eq("objScheduleMaster.schId", objFileDetails.getObjScheduleMaster().getSchId()))
-				.add(Restrictions.eq("objScheduleMaster.schStatus", "S"));
-
+				.add(Restrictions.eq("objScheduleMaster.schStatus", EnumScheduleStatus.SUCCESS))
+				.add(Restrictions.eq("fileStatus", objFileDetails.getFileStatus()));
 		if (objFileDetails.getFileName() != null && !objFileDetails.getFileName().isEmpty())
 			criteria.add(Restrictions.ilike("fileName", objFileDetails.getFileName(), MatchMode.ANYWHERE));
 
@@ -70,10 +70,9 @@ public class FileDetailsDAOImpl extends GenericDAOImpl<FileDetails, Integer> imp
 	}
 
 	public int countSuspiciousSystem(){
-		return getCurrentSession().createCriteria(FileDetails.class)
-		.setProjection(Projections.groupProperty("objDeviceInfo.id"))
+		return (int)getCurrentSession().createCriteria(FileDetails.class)
 		.add(Restrictions.eq("fileStatus", EnumFileFolderOperationStatus.SUSPICIOUS))
-		.setProjection(Projections.max("objScheduleMaster.id")).list().size();
+		.setProjection(Projections.groupProperty("objDeviceInfo.id")).list().size();
 	}
 
 	public FileDetails getFileDetailsById(int paramIntId) {

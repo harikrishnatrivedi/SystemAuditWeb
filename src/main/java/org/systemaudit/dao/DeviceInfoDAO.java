@@ -14,6 +14,8 @@ public abstract interface DeviceInfoDAO
   
   public abstract List<DeviceInfo> listDeviceInfo();
   
+  public abstract List<DeviceInfo> listSuspiciousSytemByLatestSchedule();
+  
   public abstract long countTotalDevice();
 
   public abstract DeviceInfo getDeviceInfoByDeviceComputerName(String paramStringComputerName);

@@ -30,7 +30,7 @@ public class ScheduleController {
 	private ScheduleMasterService objScheduleMasterService;
 
 	@RequestMapping(value = { "/viewSchedules" }, method = RequestMethod.GET)
-	public String viewFilesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
+	public String viewSchedulesGet(ModelMap model, HttpServletRequest request, HttpSession session) {
 		if (session.getAttribute("empDetails") == null)
 			return "redirect:/login";
 

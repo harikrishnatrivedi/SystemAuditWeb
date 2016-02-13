@@ -56,6 +56,13 @@
 											<form:input path="fileDrive" class="form-control"
 												placeholder="Enter File Drive Filter." />
 										</div>
+										<div class="form-group">
+											<label>File Status : </label>
+											<form:select path="fileStatus" class="form-control">
+												<form:options items="${fileStatusEnum}" />
+											</form:select>
+										</div>
+										
 									</div>
 								</div>
 								<div class="panel-footer">
@@ -97,7 +104,7 @@
 												<td>${objFileDetails.fileDrive}</td>
 												<td>${objFileDetails.fileName}</td>
 												<td>${objFileDetails.fileExtension}</td>
-												<td>${objFileDetails.fileFullPath}</td>
+												<td>${objFileDetails.fileFolderPath}</td>
 												<td>
 													<c:choose>
 														<c:when test="${objFileDetails.fileSize gt 1000}">

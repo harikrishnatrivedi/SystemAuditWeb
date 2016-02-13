@@ -52,7 +52,7 @@
 					                                    		<td>${objScheduleMaster.objDeviceInfo.compName}</td>
 					                                    		<td>${objScheduleMaster.objDeviceInfo.compUserName}</td>
 					                                            <td>${objScheduleMaster.schCreatedBy}</td>
-					                                            <td>${objScheduleMaster.schRunDateTime}</td>
+					                                            <td>${objScheduleMaster.schActualRunDateTime}</td>
 					                                            <td>${objScheduleMaster.schCreatedDate}</td>
 					                                            <td>${objScheduleMaster.schStatus}</td>
 					                                    	</tr>
