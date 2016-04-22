@@ -1,0 +1,40 @@
+package org.systemaudit.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.systemaudit.dao.FolderOperationRequestDAO;
+import org.systemaudit.model.FolderOperationRequest;
+import org.systemaudit.model.EnumFileFolderOperationStatus;;
+
+@Service("FolderOperationRequestService")
+@Transactional
+public class FolderOperationRequestServiceImpl implements FolderOperationRequestService {
+	
+	@Autowired
+	private FolderOperationRequestDAO objFolderOperationRequestDAO;
+
+	public void addFolderOperationRequest(FolderOperationRequest paramObjFolderOperationRequest){
+		this.objFolderOperationRequestDAO.addFolderOperationRequest(paramObjFolderOperationRequest);
+	}
+	
+	public void updateFileDetails(FolderOperationRequest paramObjFolderOperationRequest) {
+		this.objFolderOperationRequestDAO.updateFolderOperationRequest(paramObjFolderOperationRequest);
+	}
+
+	public List<FolderOperationRequest> listFolderOperationRequest(EnumFileFolderOperationStatus paramEnumFileFolderOperationStatus) {
+		return this.objFolderOperationRequestDAO.listFolderOperationRequests(paramEnumFileFolderOperationStatus);
+	}
+	public boolean checkUniqueMoveOrDeleteRequest(FolderOperationRequest objFolderOperationRequest){
+		return this.objFolderOperationRequestDAO.checkUniqueMoveOrDeleteRequest(objFolderOperationRequest);
+	}
+	public List<FolderOperationRequest> listFolderOperationRequestByDeviceInfoId(int paramIntDeviceInfoId, EnumFileFolderOperationStatus paramEnumFileFolderOperationStatus){
+		return this.objFolderOperationRequestDAO.listFolderOperationRequestByDeviceInfoId(paramIntDeviceInfoId, paramEnumFileFolderOperationStatus);
+	}
+	
+	public FolderOperationRequest getFolderOperationRequestById(int paramIntFileDetailsId) {
+		return this.objFolderOperationRequestDAO.getFolderOperationRequestById(paramIntFileDetailsId);
+	}	
+}
